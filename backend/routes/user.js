@@ -2,13 +2,13 @@
 const express=require('express')
 const router=express.Router()
 
-const {getUser,getUserById,updateUser,getPatron,updatePatron,registerPatron,getUserByFilter,registerUser,upload}=require('../controller/user')
+const {getUser,getUserById,updateUser,getPatron,updatePatron,registerPatron,getUserByFilter,registerUser,upload,getUserByEmail,getByEmail}=require('../controller/user')
 const {isSignedIn,isAuthenticated,isPatron}=require('../controller/auth')
 
 
 
 router.param("userId",getUserById)
-
+router.param("emailId",getUserByEmail)
 //get route for artist information by id
 router.get("/user/:userId",isSignedIn,isAuthenticated,getUser) //get user information ie Artist
 
@@ -31,5 +31,8 @@ router.put("/patron/update/:userId",isSignedIn,isAuthenticated,isPatron,updatePa
 
 //get patron by filter
 router.get("/patron/filters/users",getUserByFilter)
+
+//get user information by emial
+router.get("/user/info/:emailId",getByEmail)
 
 module.exports=router

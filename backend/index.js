@@ -8,6 +8,7 @@ const port = 4000
 
 const authRoutes=require('./routes/auth')
 const userRoutes=require('./routes/user')
+const opportunityRoutes=require('./routes/opportunity')
 
 const mongoose = require('mongoose');
 //Set up default mongoose connection
@@ -39,7 +40,7 @@ app.use(cors());
 
 app.use("/api",authRoutes);
 app.use("/api",userRoutes);
-
+app.use("/api",opportunityRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

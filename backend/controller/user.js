@@ -21,7 +21,23 @@ exports.upload = multer({ storage: storage });
 
 
 exports.getUserById=(req,res,next,id)=>{
+    req.profile=0
     User.findById(id).exec((err,user)=>{
+
+        if(err || !user){
+            return res.status(400).json({
+                error:"No user was found in DB BY ID"
+            })
+        }
+       
+       
+        req.profile=user;
+        next();
+    })
+}
+exports.getUserByEmail=(req,res,next,id)=>{
+
+    User.find({"email":id,role:0,isRegistered:true}).exec((err,user)=>{
 
         if(err || !user){
             return res.status(400).json({
@@ -36,12 +52,28 @@ exports.getUserById=(req,res,next,id)=>{
 }
 exports.getUser= async (req,res)=>{
 
+    
     req.profile.salt=undefined;
     req.profile.encry_password=undefined;
     req.profile.createdAt=undefined;
     req.profile.updatedAt=undefined;
     req.profile.patron=undefined;
-    return res.json(req.profile);
+   
+}
+
+exports.getByEmail=async(req,res)=>{
+
+
+
+    req.profile[0].salt=undefined;
+    req.profile[0].encry_password=undefined;
+    req.profile[0].createdAt=undefined;
+    req.profile[0].updatedAt=undefined;
+    req.profile[0].patron=undefined;
+    req.profile[0].isRegistered=false
+   
+     return res.json(req.profile);
+
 }
 //update artist user 
 exports.updateUser=(req,res)=>{
