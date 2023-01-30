@@ -1,5 +1,7 @@
 const express = require('express')
-
+const passport =require("passport")
+const cookieSession = require("cookie-session")
+const passportSetup = require("./passport")
 const app = express()
 
 require('dotenv').config()
@@ -45,6 +47,26 @@ app.use("/api",opportunityRoutes);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+// app.use(
+//   cookieSession({
+//     name:"session",
+//     keys:["cyberwolve"],
+//     maxAge:24*60*60*100
+//   })
+// );
+
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// app.use(
+//   cors({
+//     origin:"http://localhost:3000",
+//     methods:"GET,POST,PUT,DELETE",
+//     credentials:true,
+//   })
+// );
+
 
 
 

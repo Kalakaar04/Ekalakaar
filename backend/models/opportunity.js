@@ -23,12 +23,22 @@ const opportunitySchema = new Schema({
 		type:String,
 		trim:true
 	},duration:{
-		type:Number
+		type:String,
+		trim:true
+	},
+	number:{
+		type:String,
+        trim:true,
+	},
+	location:{
+		type:String,
+		trim:true,
 	},
 	link_of_document:{
 		type:String,
 		trim:true
 	},
+	
 	applied_by:[{
 		emailid:{
 			type:String,

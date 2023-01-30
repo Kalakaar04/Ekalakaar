@@ -22,6 +22,7 @@ exports.upload = multer({ storage: storage });
 
 exports.getUserById=(req,res,next,id)=>{
     req.profile=0
+    
     User.findById(id).exec((err,user)=>{
 
         if(err || !user){
@@ -32,6 +33,7 @@ exports.getUserById=(req,res,next,id)=>{
        
        
         req.profile=user;
+        
         next();
     })
 }
@@ -58,6 +60,7 @@ exports.getUser= async (req,res)=>{
     req.profile.createdAt=undefined;
     req.profile.updatedAt=undefined;
     req.profile.patron=undefined;
+    res.json(req.profile);
    
 }
 
@@ -98,14 +101,14 @@ exports.updateUser=(req,res)=>{
 //Controller for artist registration
 exports.registerUser=(req,res)=>{
   
-    const obj = {
+   /* const obj = {
         photo: {
             data: fs.readFileSync(require.resolve("../uploads/"+req.file.filename), { encoding: "utf8" }),
             contentType: "image/jpg"
         }
     }
-    req.body.photo=obj.photo
- console.log(obj.photo)
+    req.body.photo=obj.photo*/
+ //console.log(obj.photo)
     User.findByIdAndUpdate(
         {_id:req.profile._id},
         {artist:req.body,isRegistered:true},
@@ -117,7 +120,7 @@ exports.registerUser=(req,res)=>{
                     error:"You are not authorized to update this."
                 })
             }
-            user.artist.photo=obj.photo
+          //  user.artist.photo=obj.photo
 
             user.salt=undefined
             user.encry_password=undefined
@@ -154,6 +157,7 @@ exports.updatePatron=(req,res)=>{
 exports.registerPatron=(req,res)=>{
    
    // let filter={patron:req.body}
+   console.log(req.body);
     User.findByIdAndUpdate(
         {_id:req.profile._id},
         {patron:req.body,isRegistered:true},
